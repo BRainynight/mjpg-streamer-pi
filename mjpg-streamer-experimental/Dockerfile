@@ -1,20 +1,17 @@
-FROM chunliu/docker-opencv
+FROM ubuntu:18.04
 
-MAINTAINER Chun Liu <https://github.com/chunliu>
-LABEL Description="A Docker image for mjpg_streamer." Version="0.3"
+RUN apt-get update && apt-get install git cmake make build-essential libjpeg-dev imagemagick subversion libv4l-dev checkinstall lib\
+jpeg8-dev libv4l-0 gcc g++ -y
 
-# Build mjpg_streamer
-# Need to run container with the device: docker run -t -i -p 8080:8080/tcp --device=/dev/video0 image:tag
-RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
+RUN git clone https://github.com/jacksonliam/mjpg-streamer.git
 
 WORKDIR /mjpg-streamer/mjpg-streamer-experimental
 
-RUN make \ 
-    && make install \
-    && chmod +x docker-start.sh
-
+COPY . .
+RUN make USE_LIBV4L2=true clean all
+RUN make install
+RUN cat docker-start.sh
+RUN chmod +x docker-start.sh
 EXPOSE 8080/TCP
-
-ENTRYPOINT ["/mjpg-streamer/mjpg-streamer-experimental/docker-start.sh", "output_http.so -w ./www"]
-
-CMD ["input_uvc.so"]
+ENTRYPOINT ["/mjpg-streamer/mjpg-streamer-experimental/docker-start.sh"]
+CMD ["output_http.so -w ./www", "input_uvc.so"]

@@ -1,0 +1,20 @@
+version: '3'
+services:
+    mjpg-cam1: # sudo mjpg_streamer -i "input_uvc.so -r 1280x720 -d /dev/video0 -f 30" -o "output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www"
+        restart: always
+        image: mjpi # badsmoke/mjpg-streamer
+        environment:
+            - ENV_RESOLUTION=1280x720
+            - ENV_FPS=30
+            - ENV_LOCATION=./www #/usr/local/share/mjpg-streamer/www # 
+            - ENV_CAMERA=/dev/video0
+        devices:
+            - /dev/video0
+        ports:
+            - 8080:8080
+
+
+
+
+
+

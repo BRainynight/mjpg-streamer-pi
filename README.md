@@ -2,7 +2,8 @@
 
 在這裡找到解答：https://github.com/OctoPrint/octoprint-docker/issues/47
 
-此專案中已經執行了論壇的步驟，完整的步驟將放在後面。並且在專案內增加 `docker-compose.yml` 一鍵完成容器的運行！
+此專案中已經執行了論壇的步驟，完整的步驟將放在後面。並且根據二樓的建議，增加環境變數。
+最後，在專案內增加 `docker-compose.yml` 一鍵完成容器的運行！
 
 下載專案後，執行指令
 
